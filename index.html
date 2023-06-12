@@ -149,9 +149,9 @@
   /* modtager respons fra Api.php */
   ajax.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200) {
-      /* console.log(this.responseText); */
+      console.log(this.responseText);
       let data = JSON.parse(this.responseText);
-      /* console.log(data); */
+      console.log(data);
 
       /* html værdier for <tbody> */
       let html = "";
@@ -196,13 +196,19 @@
 
      console.log(top3DatatasksSliced);
 
+     for (var key in dataTasks) {
+      console.log(key);
+      console.log([key]);
+     }
+
+
       /* looper gennem dataen */
       for (let i = 0; i < top3DatatasksSliced.length; i++)
       {
         /* Henter dataen fra tabellerne og sætter dem ind i variabler */
         let name = top3DatatasksSliced[i].navn;
         let eval = top3DatatasksSliced[i].bedømmelse;
-        let eval_counted = result[i];
+        var eval_counted = result[i];
         let eval_id = top3DatatasksSliced[i].bedømmelse_id;
         let status = top3DatatasksSliced[i].taskStatus;
         let date = top3DatatasksSliced[i].dato;
@@ -300,7 +306,7 @@
     let html = "";
 
         /* looper gennem dataen */
-    for (let i = 0; i < top3DateFilter.length; i++)
+    for (let i = 0; i < dataTasks.length; i++)
     {
       /* Henter dataen fra tabellerne og sætter dem ind i variabler */
       let name = dataTasks[i].navn;
