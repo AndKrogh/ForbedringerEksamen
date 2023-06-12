@@ -149,9 +149,9 @@
   /* modtager respons fra Api.php */
   ajax.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
+      /* console.log(this.responseText); */
       let data = JSON.parse(this.responseText);
-      console.log(data);
+      /* console.log(data); */
 
       /* html værdier for <tbody> */
       let html = "";
@@ -159,7 +159,7 @@
       /* Hack til at tilgå objektet rigtigt */
       var dataTasks = data.tasks;
 
-      console.log(dataTasks);
+      /* console.log(dataTasks); */
 
       /* Sorterer datoerne kronologisk */
       function byDate(a, b) {
@@ -171,15 +171,24 @@
       /* Tæller hvor mange bedømmelser hver task har fået gennem bedømmelses_id, som definerer hvilken task bedømmelserne hører til, og selve bedømmelsen fra den joinede tabel,
        som skal være en bolean. Den viser flere af de samme rækker, da en task har flere bedømmelser og jeg har ikke fået sorteret det.
        Jeg er ikke blevet færdig med, men lader det stå. */
-      let countOccurrencesOfEvaluations = () => {
+      let countOccurrencesOfEvaluations = (dataTasks) => {
           let map = {};
           for ( var i = 0; i < dataTasks.length; i++ ) {
               map[dataTasks[i].bedømmelse_id] = ~~map[dataTasks[i].bedømmelse] + 1;
-              console.log(JSON.stringify(dataTasks[i].bedømmelse_id + ":" + dataTasks[i].bedømmelse));
+              console.log(dataTasks[i].bedømmelse_id + ":" + dataTasks[i].bedømmelse);
+
           }
           return map;
       }
 
+      for (let i = 0; i < dataTasks.length; i++) {
+        var dataTasksEval = dataTasks[i].bedømmelse_id;
+        console.log(dataTasksEval);
+        
+      }
+
+      console.log(dataTasksEval);
+      
       var result = countOccurrencesOfEvaluations(dataTasks);
       console.log(JSON.stringify(result));
       console.log(result);
@@ -187,21 +196,16 @@
       let { "1": bedømmelse_id, ...rest } = result;
       let obj = { "0": 1, ...rest }
 
-      console.log(JSON.stringify(obj));
+      /* console.log(JSON.stringify(obj)); */
 
      var top3DateFilter = dataTasks.sort(byDate);
-     console.log(top3DateFilter);
+     /* console.log(top3DateFilter); */
 
      var top3DatatasksSliced = top3DateFilter.slice(0,3);
 
-     console.log(top3DatatasksSliced);
+     /* console.log(top3DatatasksSliced); */
 
-     for (var key in dataTasks) {
-      console.log(key);
-      console.log([key]);
-     }
-
-
+   
       /* looper gennem dataen */
       for (let i = 0; i < top3DatatasksSliced.length; i++)
       {
@@ -214,7 +218,6 @@
         let date = top3DatatasksSliced[i].dato;
         let comment = top3DatatasksSliced[i].kommentar;
         
-        console.log(eval_counted);
 
         /* Ternary operator for status, fungerer som en if-statement. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
         let statusCurrentWaiting = (status == 1) ? "Igangværende":"Ventende";
@@ -301,7 +304,7 @@
       }; 
     };
     
-
+    
     /* html værdier for <tbody> */
     let html = "";
 
