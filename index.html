@@ -159,7 +159,7 @@
       /* Hack til at tilgå objektet rigtigt */
       var dataTasks = data.tasks;
 
-      /* console.log(dataTasks); */
+      console.log(dataTasks);
 
       /* Sorterer datoerne kronologisk */
       function byDate(a, b) {
@@ -205,18 +205,30 @@
 
      /* console.log(top3DatatasksSliced); */
 
+      function removeDuplicates() {
+        let unique = [];
+        for (i = 0; i < dataTasks.length; i++) {
+            if (unique.indexOf(dataTasks[i].navn) === -1) {
+                unique.push(dataTasks[i].navn);
+            }
+        }
+        return unique;
+    }
+    console.log(removeDuplicates(dataTasks));
    
       /* looper gennem dataen */
       for (let i = 0; i < top3DatatasksSliced.length; i++)
       {
         /* Henter dataen fra tabellerne og sætter dem ind i variabler */
-        let name = top3DatatasksSliced[i].navn;
+        let name = removeDuplicates(dataTasks[i].navn);
         let eval = top3DatatasksSliced[i].bedømmelse;
         var eval_counted = result[i];
         let eval_id = top3DatatasksSliced[i].bedømmelse_id;
         let status = top3DatatasksSliced[i].taskStatus;
         let date = top3DatatasksSliced[i].dato;
         let comment = top3DatatasksSliced[i].kommentar;
+
+        console.log(removeDuplicates(name));
         
 
         /* Ternary operator for status, fungerer som en if-statement. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
@@ -244,8 +256,8 @@
 
         /* appender til html */
         html += "<tr>";
-          html += "<td>" + name + "</td>";
-          html += "<td>" + eval_counted + "</td>";
+          html += "<td>" + name[i] + "</td>";
+          html += "<td></td>";
           html += "<td>" + statusCurrentWaiting + "</td>";
           html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + comment + '</td>';
           html += "<td>" + findQuarter(month); + "</td>";
