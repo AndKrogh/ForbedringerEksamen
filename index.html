@@ -162,25 +162,25 @@
         let html = "";
         
         /* Hack til at tilgå objektet rigtigt */
-        let dataTasks = data.tasks;
-        let dataEval = data.eval;
+        var dataTasks = data.tasks;
+        var dataEval = data.eval;
 
         var dataTasksAndEval = (dataTasks = dataTasks) ? dataTasks : dataEval;
 
         console.log(dataTasksAndEval);
 
+        let countOccurrencesOfEvaluations = (dataTasksAndEval) => {
+          let map = {};
+          for ( var i = 0; i < dataTasksAndEval.length; i++ ) {
+            console.log(dataTasksAndEval[i].bedømmelse_id)
+              map[dataTasksAndEval[i].bedømmelse_id] = ~~map[dataTasksAndEval[i].bedømmelse] + 1;
+              console.log(dataTasksAndEval[i].bedømmelse_id + ":" + dataTasksAndEval[i].bedømmelse);
 
-        for(let i = 0; i < dataTasksAndEval.length; i++){
-          let dataEvalCounted = dataTasksAndEval[i].bedømmelse_id;
-          let dataEvalValue = dataTasksAndEval [i].bedømmelse;
+          }
+          return map;
+        }
 
-          var DataEvalConcatenated = dataTasksAndEval + ":" + dataTasksAndEval;
-
-          console.log(dataEvalCounted);
-          /* console.log(dataEvalValue); */
-        };
-
-        console.log(dataTasksAndEval[i].bedømmelse);
+        console.log(countOccurrencesOfEvaluations(dataTasksAndEval));
         
         /* Sorterer datoerne kronologisk */
         function byDate(a, b) {
@@ -189,7 +189,6 @@
 
         /* console.log(dataTasks.sort(byDate)); */
 
-
         var top3DateFilter = dataTasksAndEval.sort(byDate);
         /* console.log(top3DateFilter); */
 
@@ -197,9 +196,6 @@
 
        /*  console.log(top3DatatasksSliced); */
 
-        
-
-    
         /* looper gennem dataen */
         for (let i = 0; i < top3DatatasksSliced.length; i++)
         {
@@ -431,7 +427,7 @@
     }
 
     /* Sender JSON objektet til api url'en, sætter metoden som en post metode og sender variablen 'payload' med som 'body'. */
-    fetch('http://localhost/ForbedringerEksamen/dbCon/Api.php?action=jointasks', {
+    fetch('http://localhost/ForbedringerEksamen/dbCon/Api.php?action=addtasks', {
       method:'POST',
       body: payload,
       headers: {

@@ -78,19 +78,14 @@
      
         $stmt = $conn->prepare("INSERT INTO tasks (navn, taskStatus, beskrivelse) VALUES (?, ?, ?)");
        
-       /*  $stmt = mysqli_stmt_init($conn); */
 
-      /*   if( ! mysqli_stmt_prepare($stmt, $sql)) {
-            die(mysqli_error($conn));
-
-        } */
         
         /* $navn = "hejmeddig";
         $taskStatus = 1;
-        $beskrivelse = "hejmdd";
- */
-        $stmt->bind_param( "sis", $navn, $taskStatus, $beskrivelse);
-        /* mysqli_stmt_execute($stmt) */;
+        $beskrivelse = "hejmdd"; */
+
+        $stmt->bind_param( "sss", $navn, $taskStatus, $beskrivelse);
+        /* mysqli_stmt_execute($stmt); */
         $stmt->execute();
         $stmt->close();
 
