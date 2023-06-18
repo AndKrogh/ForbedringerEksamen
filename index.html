@@ -21,7 +21,7 @@
       <div class="modal-content">
         <h2>Oprettelse af nye features</h2>
         <p>Herunder kan du oprette nye features</p>
-        <form id="form" >
+        <form id="form" action="http://localhost/ForbedringerEksamen/dbCon/Api.php?action=addtasks" method="post" >
             <div class="modal-div">
               <div class="modalDivName">
                  <label for="navn">Navn:</label>
@@ -167,20 +167,20 @@
 
         var dataTasksAndEval = (dataTasks = dataTasks) ? dataTasks : dataEval;
 
-        console.log(dataTasksAndEval);
+        /* console.log(dataTasksAndEval); */
 
         let countOccurrencesOfEvaluations = (dataTasksAndEval) => {
           let map = {};
           for ( var i = 0; i < dataTasksAndEval.length; i++ ) {
-            console.log(dataTasksAndEval[i].bedømmelse_id)
+            /* console.log(dataTasksAndEval[i].bedømmelse_id) */
               map[dataTasksAndEval[i].bedømmelse_id] = ~~map[dataTasksAndEval[i].bedømmelse] + 1;
-              console.log(dataTasksAndEval[i].bedømmelse_id + ":" + dataTasksAndEval[i].bedømmelse);
+              /* console.log(dataTasksAndEval[i].bedømmelse_id + ":" + dataTasksAndEval[i].bedømmelse); */
 
           }
           return map;
         }
 
-        console.log(countOccurrencesOfEvaluations(dataTasksAndEval));
+        /* console.log(countOccurrencesOfEvaluations(dataTasksAndEval)); */
         
         /* Sorterer datoerne kronologisk */
         function byDate(a, b) {
@@ -207,12 +207,14 @@
           let status = top3DatatasksSliced[i].taskStatus;
           let date = top3DatatasksSliced[i].dato;
           let comment = top3DatatasksSliced[i].kommentar;
-
-          console.log(dataTasksAndEval[i].bedømmelse);
           
 
           /* Ternary operator for status, fungerer som en if-statement. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
           let statusCurrentWaiting = (status == 1) ? "Igangværende":"Ventende";
+
+          let commentEmptyShow = (comment === "undefined") ? "":comment;
+
+          let evalEmptyShow = (eval_counted === "undefined") ?  eval_counted:" ";
 
           /* Dato split. Splitter datoen ind i år, måneder, dage */
           let dateSplit = date.split("-");
@@ -237,20 +239,20 @@
           /* appender til html */
           html += "<tr>";
             html += "<td>" + name + "</td>";
-            html += "<td>" + eval_counted + "</td>";
+            html += "<td>" + evalEmptyShow + "</td>";
             html += "<td>" + statusCurrentWaiting + "</td>";
-            html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + comment + '</td>';
+            html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + commentEmptyShow + '</td>';
             html += "<td>" + findQuarter(month); + "</td>";
             html += "<td>" + year + "</td>";
             html += '<td><span class="dropdownEditArrow"><i class="fa fa-angle-down" style="font-size:36px"></i></span></td>';
           html += "</tr>";
-          html += '<tr class="dropdownEditDiv">';
+          html += '<tr class="dropdownEditDiv"><form action="http://localhost/ForbedringerEksamen/dbCon/Api.php?action=updatetasks" method="PUT">';
             html += '<td ><p>Navn</p><input type="text" id="name" name="name1"></td>';
             html += '<td ><p>Status</p><input type="text" id="status" name="status1"></td>';
             html += '<td ><p>Beskrivelse</p><input type="text" id="description" name="description1"></td>';
             html += '<td ><p>Dato</p><input type="text" id="date" name="date1"></td>';
-            html += '<td ><button class="dropdownDivCancelBtn">Annuller</button><button class="dropdownDivCloseBtn">Gem</button></td>';
-          html += "</tr>";
+            html += '<td ><button class="dropdownDivCancelBtn">Annuller</button><button class="dropdownDivCloseBtn" type="submit">Gem</button></td>';
+          html += "</form></tr>";
         };
 
         /* erstater <tbody> af <table> */
@@ -272,22 +274,10 @@
           };
 
           function closeDropdownBox() {
-            if( document.getElementById('name').value == ""){
-              alert("Navn skal være udfyldt");
-              return false;
-            } else if(document.getElementById('status').value == "") {
-              alert("Status skal være udfyldt");
-              return false;
-            } else if(document.getElementById('description').value == "") {
-              alert("Beskrivelse skal være udfyldt");
-              return false;
-            } else if(document.getElementById('date').value == "") {
-              alert("dato skal være udfyldt");
-              return false;
-            } else{
-              alert("Ny feature oprettet");
-              dropdownEditBox[i].style.display = "none";
-            }
+            if( document.getElementById('name').value != ""){
+            alert("Ny feature oprettet");
+            dropdownEditBox[i].style.display = "none";
+          }
           };
 
           function cancelCloseDropdownBox() {
@@ -315,6 +305,11 @@
         /* Ternary operator for status, fungerer som en if-statement, fylder bare ikke så meget. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
         let statusCurrentWaiting = (status == 1) ? "Igangværende":"Ventende";
 
+        let commentEmptyShow = (comment === "undefined") ? comment:"";
+
+        let evalEmptyShow = (eval_counted === "undefined") ?  eval_counted:"";
+
+
         /* Dato split. Splitter datoen ind i år, måneder, dage */
         let dateSplit = date.split("-");
         let year = dateSplit[0];
@@ -338,9 +333,9 @@
         /* appender til html */
         html += "<tr>";
           html += "<td>" + name + "</td>";
-          html += "<td>" + eval_counted + "</td>";
+          html += "<td>" + evalEmptyShow + "</td>";
           html += "<td>" + statusCurrentWaiting + "</td>";
-          html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + comment + '</td>';
+          html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + commentEmptyShow + '</td>';
           html += "<td>" + findQuarter(month); + "</td>";
           html += "<td>" + year + "</td>";
           html += '<td><span class="dropdownEditArrow"><i class="fa fa-angle-down" style="font-size:36px"></i></span></td>';
@@ -372,25 +367,6 @@
           dropdownEditBox[i].style.display = "block";
         };
 
-        function closeDropdownBox() {
-          if( document.getElementById('name').value == ""){
-            alert("Navn skal være udfyldt");
-            return false;
-          } else if(document.getElementById('status').value == "") {
-            alert("Status skal være udfyldt");
-            return false;
-          } else if(document.getElementById('description').value == "") {
-            alert("Beskrivelse skal være udfyldt");
-            return false;
-          } else if(document.getElementById('date').value == "") {
-            alert("dato skal være udfyldt");
-            return false;
-          } else{
-            alert("Ny feature oprettet");
-            dropdownEditBox[i].style.display = "none";
-          }
-        };
-
         function cancelCloseDropdownBox() {
           dropdownEditBox[i].style.display = "none";
         };
@@ -399,54 +375,4 @@
     };
   };
  
-
-
-
-
-  /* ajax POST kald. Virker ikke helt. Returnerer null i database, Det har noget med dato datatypen. har ikke nået at kigge på det. */
-  let form = document.querySelector('#form');
-
-  /* sætter en eventlistener på typen 'submit' i formen */
-  form.addEventListener('submit',(e) => {
-    e.preventDefault();  
-
-    /* Laver en variabel, hvor dataen fra formen om bliver sat ind som et js objeckt */
-    let formData = new FormData(form);
-
-    /* Laver key/value pairs'ne om til et js objekt */
-    let res = Object.fromEntries(formData);
-
-    /* Laver js objektet om til et JSON objekt */
-    let payload = JSON.stringify(res);
-   /*  console.log(res);
-    console.log(payload); */
-
-    /* Tjekker dataen fra de forskellige inputs i formen */
-    for (item of formData) {
-      console.log(item[0],item[1]);
-    }
-
-    /* Sender JSON objektet til api url'en, sætter metoden som en post metode og sender variablen 'payload' med som 'body'. */
-    fetch('http://localhost/ForbedringerEksamen/dbCon/Api.php?action=addtasks', {
-      method:'POST',
-      body: payload,
-      headers: {
-        'Accept': 'application/json',
-        'content-Type': 'application/json'
-      }
-    })
-    
-    /* Tester om posten er succesfuld */
-    .then((res) => {
-      if (res.status === 200) {
-        console.log("Post successfully created!")
-      }
-    })
-      
-    /* Fanger fejl hvis der er nogen */
-    .catch((error) => {
-      console.log(error)
-    })
-
-  });  
 </script>

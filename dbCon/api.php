@@ -48,9 +48,8 @@
     
     if($action=='jointasks'){
         /* joiner tabellerne tasks, kommentar, og bedømmelse når de bliver hentet ned fra database */
-        $sql = "SELECT tasks.navn, tasks.taskStatus, tasks.beskrivelse, kommentar.kommentar, tasks.dato, tasks.bedømmelse_id
-         FROM tasks, kommentar WHERE tasks.kommentar_id = kommentar.kommentar_id
-         ";
+        $sql = "SELECT tasks.navn, tasks.taskStatus, tasks.beskrivelse , tasks.dato
+         FROM tasks";
         $query = $conn->query($sql);
         $tasks = array();
  
@@ -64,32 +63,30 @@
     }
     
     if($action=='addtasks'){
-        /* $navn = $_POST['navn'];
-        $taskStatus = $_POST['taskStatus'];
+        $navn = $_POST['navn'];
+        $taskStatus = filter_input(INPUT_POST, "taskStatus", FILTER_VALIDATE_BOOLEAN);
         $beskrivelse = $_POST['beskrivelse'];
-        $dato = $_POST['dato']; */
+        $dato = $_POST['dato'];
 
-       
-       
-
-        if(mysqli_connect_errno()){
-            die("connection error: ". mysqli_connect_errno());
-        }
-     
-        $stmt = $conn->prepare("INSERT INTO tasks (navn, taskStatus, beskrivelse) VALUES (?, ?, ?)");
-       
-
-        
         /* $navn = "hejmeddig";
-        $taskStatus = 1;
+        $taskStatus = "0";
         $beskrivelse = "hejmdd"; */
 
-        $stmt->bind_param( "sss", $navn, $taskStatus, $beskrivelse);
-        /* mysqli_stmt_execute($stmt); */
-        $stmt->execute();
-        $stmt->close();
+        $sql = "INSERT INTO tasks(navn, taskStatus, beskrivelse, dato) VALUES (?, ?, ?, ?)";
+       
+       $stmt = mysqli_stmt_init($conn);
 
-        
+       if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+            die(mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($stmt, "siss", $navn, $taskStatus, $beskrivelse, $dato);
+
+        mysqli_stmt_execute($stmt);
+
+        echo "Ny feature gemt. Du vil vende tilbage til siden om kort tid.";
+
+        header( "refresh:2;http://localhost/ForbedringerEksamen/index.html" );
         /* var_dump($navn, $taskStatus ,$beskrivelse, $dato); */
 
        /*  $query=$conn->query($sql); */
@@ -97,20 +94,25 @@
     
     if($action=='updatetasks'){
         $navn = $_PUT['navn'];
-        $bedømmelse = $_PUT['bedømmelse'];
-        $status = $_PUT['taskStatus'];
-        $kommentar = $_PUT['kommentar_id'];
-     
-        $sql="UPDATE tasks SET navn='$navn', bedømmelse='$bedømmelse', taskStatus='$taskStatus', kommentar_id='$kommentar_id'";
-        $query=$conn->query($sql);
-        
-        if($query){
-            $out['message']='Task Successfully Updatet';
+        $taskStatus = filter_input(INPUT_PUT, "taskStatus", FILTER_VALIDATE_BOOLEAN);
+        $beskrivelse = $_PUT['beskrivelse'];
+        $dato = $_POST['dato'];
+
+        $sql = "UPDATE tasks SET navn='?', taskStatus='?', beskrivelse='?', dato='?'";
+       
+       $stmt = mysqli_stmt_init($conn);
+
+       if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+            die(mysqli_error($conn));
         }
-        else{
-            $out['error']=true;
-            $out['message']='Error in Updating Occured';
-        }
+
+        mysqli_stmt_bind_param($stmt, "siss", $navn, $taskStatus, $beskrivelse, $dato);
+
+        mysqli_stmt_execute($stmt);
+
+        echo "Ny feature gemt. Du vil vende tilbage til siden om kort tid.";
+
+        header( "refresh:2;http://localhost/ForbedringerEksamen/index.html" );
     }
     
     if($action=='deletetasks'){
@@ -124,7 +126,6 @@
     //Close connection
     $conn->close();
      
-    header("Content-type: application/json");
     die();
   
 ?>
