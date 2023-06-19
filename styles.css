@@ -462,7 +462,7 @@ padding: 5%;
 
 @media (max-width: 1730px ) {
     .content-table-top3 th, .content-table-top3 td {
-        padding: 10px 65px;
+        padding: 10px 64px;
     }
 
     .dropdownEditDiv td {
@@ -471,7 +471,7 @@ padding: 5%;
     }
 
     .content-table th, .content-table td {
-        padding: 10px 70px;
+        padding: 10px 64px;
     }
 
 }
