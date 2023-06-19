@@ -470,6 +470,10 @@ padding: 5%;
         padding: 10px 60px;
     }
 
+    .dropdownDivCancelBtn{
+    padding: 8px 9px;
+    }
+
     .content-table th, .content-table td {
         padding: 10px 61px;
     }
