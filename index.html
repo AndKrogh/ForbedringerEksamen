@@ -196,26 +196,42 @@
 
        /*  console.log(top3DatatasksSliced); */
 
+        const array = Array(6)
+          .fill()
+          .map(() => Math.floor(20 * Math.random()));
+        console.log(array);
+
+        array.sort(function(a, b){return b-a});
+
+        const array1 = Array(6)
+          .fill()
+          .map(() => Math.floor(20 * Math.random()));
+        console.log(array1);
+
+        array1.sort(function(a, b){return b-a});
+
         /* looper gennem dataen */
         for (let i = 0; i < top3DatatasksSliced.length; i++)
         {
           /* Henter dataen fra tabellerne og sætter dem ind i variabler */
           let name = dataTasksAndEval[i].navn;
           let eval = top3DatatasksSliced[i].bedømmelse;
-          var eval_counted = dataTasksAndEval[i].bedømmelse;
+          var eval_counted = array1[i];
           let eval_id = top3DatatasksSliced[i].bedømmelse_id;
           let status = top3DatatasksSliced[i].taskStatus;
           let date = top3DatatasksSliced[i].dato;
-          let comment = top3DatatasksSliced[i].kommentar;
+          let comment = array[i];
+
+          console.log(comment);
           
 
           /* Ternary operator for status, fungerer som en if-statement. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
           let statusCurrentWaiting = (status == 1) ? "Igangværende":"Ventende";
 
-          let commentEmptyShow = (comment === "undefined") ? "":comment;
+          /* let commentEmptyShow = (comment === "undefined") ? comment:"";
 
           let evalEmptyShow = (eval_counted === "undefined") ?  eval_counted:" ";
-
+ */
           /* Dato split. Splitter datoen ind i år, måneder, dage */
           let dateSplit = date.split("-");
           let year = dateSplit[0];
@@ -239,9 +255,9 @@
           /* appender til html */
           html += "<tr>";
             html += "<td>" + name + "</td>";
-            html += "<td>" + evalEmptyShow + "</td>";
+            html += "<td>" + eval_counted + "</td>";
             html += "<td>" + statusCurrentWaiting + "</td>";
-            html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + commentEmptyShow + '</td>';
+            html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i> ' + comment + '</td>';
             html += "<td>" + findQuarter(month); + "</td>";
             html += "<td>" + year + "</td>";
             html += '<td><span class="dropdownEditArrow"><i class="fa fa-angle-down" style="font-size:36px"></i></span></td>';
