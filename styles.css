@@ -37,7 +37,7 @@ font-family: 'Roboto Condensed' !important;
     color: var(--white);
     padding: 8px 10px;
     justify-content: center;
-    margin: 50px 20px 0px 100px;
+    margin: 50px 20px 0px 70px;
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 1px;
@@ -62,7 +62,7 @@ font-family: 'Roboto Condensed' !important;
 }
 
 .headerTitle {
-    margin: 50px 20px 0px 100px;
+    margin: 50px 20px 0px 70px;
     color: var(--white);
 }
 
