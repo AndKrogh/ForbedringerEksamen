@@ -289,7 +289,7 @@ label {
 .dropdownDivCancelBtn{
     background-color: var(--red);
     color: var(--white);
-    padding: 8px 6px;
+    padding: 8px 10px;
     cursor: pointer;
     margin-bottom: 10px;
     margin-right: 8px;
