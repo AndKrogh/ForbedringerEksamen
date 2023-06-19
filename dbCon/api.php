@@ -112,7 +112,7 @@
 
         echo "Ny feature gemt. Du vil vende tilbage til siden om kort tid.";
 
-        header( "refresh:2;http://localhost/ForbedringerEksamen/index.html" );
+        header( "refresh:10;http://localhost/ForbedringerEksamen/index.html" );
     }
     
     if($action=='deletetasks'){

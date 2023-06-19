@@ -157,7 +157,7 @@
         /* console.log(this.responseText); */
         var data = JSON.parse(this.responseText);
         /* console.log(data); */
-
+ 
         /* html værdier for <tbody> */
         let html = "";
         
@@ -196,14 +196,12 @@
 
        /*  console.log(top3DatatasksSliced); */
 
-        const array = Array(6)
+        let array = Array(20)
           .fill()
           .map(() => Math.floor(20 * Math.random()));
         console.log(array);
 
-        array.sort(function(a, b){return b-a});
-
-        const array1 = Array(6)
+        let array1 = Array(20)
           .fill()
           .map(() => Math.floor(20 * Math.random()));
         console.log(array1);
@@ -306,24 +304,35 @@
       /* html værdier for <tbody> */
       let html = "";
 
+      let array = Array(20)
+          .fill()
+          .map(() => Math.floor(20 * Math.random()));
+        console.log(array);
+
+        let array1 = Array(20)
+          .fill()
+          .map(() => Math.floor(20 * Math.random()));
+        console.log(array1);
+
+
           /* looper gennem dataen */
       for (let i = 0; i < dataTasksAndEval.length; i++)
       {
         /* Henter dataen fra tabellerne og sætter dem ind i variabler */
         let name = dataTasksAndEval[i].navn;
         let eval = dataTasksAndEval[i].bedømmelse;
-        let eval_counted = dataTasksAndEval[i].bedømmelse_id;
+        let eval_counted = array1[i];
         let eval_id = dataTasksAndEval[i].bedømmelse_id;
         let status = dataTasksAndEval[i].taskStatus;
         let date = dataTasksAndEval[i].dato;
-        let comment = dataTasksAndEval[i].kommentar;
+        let comment = array[i];
 
         /* Ternary operator for status, fungerer som en if-statement, fylder bare ikke så meget. Hvis status er 1 printer den igangværende, hvis status er andet end 1 printer den ventende */
         let statusCurrentWaiting = (status == 1) ? "Igangværende":"Ventende";
 
-        let commentEmptyShow = (comment === "undefined") ? comment:"";
+       /*  let commentEmptyShow = (comment === "undefined") ? comment:"";
 
-        let evalEmptyShow = (eval_counted === "undefined") ?  eval_counted:"";
+        let evalEmptyShow = (eval_counted === "undefined") ?  eval_counted:""; */
 
 
         /* Dato split. Splitter datoen ind i år, måneder, dage */
@@ -349,9 +358,9 @@
         /* appender til html */
         html += "<tr>";
           html += "<td>" + name + "</td>";
-          html += "<td>" + evalEmptyShow + "</td>";
+          html += "<td>" + eval_counted + "</td>";
           html += "<td>" + statusCurrentWaiting + "</td>";
-          html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + commentEmptyShow + '</td>';
+          html += '<td><i class="fa fa-comments" aria-hidden="true" style="font-size:20px"></i>' + comment + '</td>';
           html += "<td>" + findQuarter(month); + "</td>";
           html += "<td>" + year + "</td>";
           html += '<td><span class="dropdownEditArrow"><i class="fa fa-angle-down" style="font-size:36px"></i></span></td>';
