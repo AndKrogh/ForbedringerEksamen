@@ -86,7 +86,7 @@
 
         echo "Ny feature gemt. Du vil vende tilbage til siden om kort tid.";
 
-        header( "refresh:2;http://localhost/ForbedringerEksamen/index.html" );
+        header( "refresh:1;http://localhost/ForbedringerEksamen/index.html" );
         /* var_dump($navn, $taskStatus ,$beskrivelse, $dato); */
 
        /*  $query=$conn->query($sql); */
