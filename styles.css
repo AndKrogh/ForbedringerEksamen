@@ -461,6 +461,11 @@ padding: 5%;
 }
 
 @media (max-width: 1730px ) {
+
+    .modal-content { 
+        height: 54%;
+    }
+
     .content-table-top3 th, .content-table-top3 td {
         padding: 10px 61px;
     }
